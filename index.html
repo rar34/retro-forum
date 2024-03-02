@@ -1,19 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ReTro Forum</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style/style.css">
 </head>
-<body>
-    <header>
 
+<body class="container mx-auto">
+    <header>
+        <!-- navbar -->
+        <div class="navbar bg-base-100 flex justify-between">
+            <div class="navbar-start">
+              <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                </div>
+                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                  <li><a><img src="./images/home.png" alt=""></a></li>
+                  <li><a><img src="./images/pen.png" alt=""></a></li>
+                  <li><a><img src="./images/people.png" alt=""></a></li>
+                  <li><a><img src="./images/flag.png" alt=""></a></li>
+                  
+                
+                </ul>
+              </div>
+              <a class="btn btn-ghost text-xl lg:text-4xl font-black font-mulish">ReTro Forum</a>
+            </div>
+            <div class="flex gap-5">
+                <div class="navbar-center hidden lg:flex">
+                    <ul class="menu menu-horizontal gap-5 px-1">
+                      <li title="Home"><a class="bg-gray-200 p-5 rounded-full"><img src="./images/home.png" alt=""></a></li>
+                        <li title="Edit"><a class="bg-gray-200 p-5 rounded-full"><img src="./images/pen.png" alt=""></a></li>
+                        <li title="Add"><a class="bg-gray-200 p-5 rounded-full"><img src="./images/people.png" alt=""></a></li>
+                        <li title="Location"><a class="bg-gray-200 p-5 rounded-full"><img src="./images/flag.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <div class="">
+                    <a class="btn font-inter bg-[#797DFC] text-white rounded-full text-xl font-bold">Sign In</a>
+                  </div>
+            </div>
+          </div>
     </header>
     <main>
 
     </main>
     <footer>
-        
+
     </footer>
 </body>
+
 </html>
