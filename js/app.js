@@ -1,5 +1,6 @@
 const cardContainer = document.getElementById('card-container');
 const titleContainer = document.getElementById('title-container');
+const latestPostContainer = document.getElementById('latest-post-container');
 
 
 const loadData = () => {
@@ -70,4 +71,41 @@ const displayTitle = (post) =>{
 }
 
 
+const latestPosts = () =>{
+    const url = 'https://openapi.programming-hero.com/api/retro-forum/latest-posts';
+    fetch(url)
+    .then(res => res.json())
+    .then(posts => {
+        posts.forEach(post => {
+            const div = document.createElement('div');
+            div.className = 'card card-compact bg-white border p-10';
+            div.innerHTML = `
+            <figure><img src="${post.cover_image}" alt="" /></figure>
+                    <div class="flex gap-2 items-center">
+                        <img class="w-4 h-4" src="./images/icon.JPG" alt="">
+                        <p class="text-[#12132D99]">29 January 2024</p>
+                    </div>
+                    <div class="card-body">
+                      <h2 class="card-title text-xl font-extrabold">${post.title}</h2>
+                      <p class="text-[#12132D99]">${post.description}</p>
+                      <div class="">
+                        <div class="avatar flex gap-5">
+                            <div class="w-14 h-14 rounded-full">
+                              <img src="${post.profile_image}" />
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">${post.author.name}</h3>
+                                <p class="text-[#12132D99]">${post.author?.designation}</p>
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+            `;
+            latestPostContainer.appendChild(div);
+        });
+    })
+}
+
+
 loadData();
+latestPosts();
