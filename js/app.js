@@ -52,22 +52,23 @@ const displayCard = (data) => {
         </div>
         `;
         cardContainer.appendChild(card);
-        displayTitle(post);
+        displayTitle(post, card);
     });
 }
 
-const displayTitle = (post) =>{
-    const allBtn = document.getElementsByClassName('btn-email');
-    for (const btn of allBtn){
-        btn.addEventListener('click', function(){
-            const div = document.createElement('div');
-            div.className = 'bg-white p-4 rounded-3xl flex justify-between mb-3 gap-4 items-center';
-            const titleP = document.createElement('p');
-            titleP.innerText = post.title;
-            div.appendChild(titleP);
-            titleContainer.appendChild(div);
-        })
-    }
+const displayTitle = (post, card) => {
+    const btn = card.querySelector('.btn-email');
+    btn.addEventListener('click', function () {
+        const div = document.createElement('div');
+        div.className = 'bg-white p-4 rounded-3xl flex justify-between gap-4 items-center';
+        const titleP = document.createElement('p');
+        titleP.innerText = post.title;
+        const seen = document.createElement('p');
+        seen.innerHTML = `<img src="./images/seen.png" alt=""> ${post.view_count}`;
+        div.appendChild(titleP);
+        div.appendChild(seen);
+        titleContainer.appendChild(div);
+    });
 }
 
 
