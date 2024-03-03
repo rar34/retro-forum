@@ -1,4 +1,5 @@
 const cardContainer = document.getElementById('card-container');
+const titleContainer = document.getElementById('title-container');
 
 
 const loadData = () => {
@@ -14,9 +15,9 @@ const displayCard = (data) => {
         const card = document.createElement('div');
         card.className = 'bg-[#F3F3F5] p-10 rounded-3xl flex gap-7';
         card.innerHTML = `
-        <div class="bg-[#F3F3F5] p-10 rounded-3xl flex gap-7">
+        <div class="bg-[#F3F3F5] p-2 lg:p-10 rounded-3xl flex gap-7">
             <div class="relative">
-                <img src="./images/pp.png" alt="">
+                <img class="w-20 h-20 rounded-2xl" src="${post.image}" alt="">
                 <div class="bg-green-500 w-4 h-4 -top-1 -right-1 rounded-full absolute"> </div>
             </div>
             <div class="space-y-3">
@@ -27,7 +28,7 @@ const displayCard = (data) => {
                 <h3 class="text-xl font-bold text-primary-color font-mulish">${post.title}</h3>
                 <p class="text-[#12132D99] w-full">${post.description}</p>
                 <hr class="my-6">
-                <div class="relative">
+                <div class="flex items-center justify-between">
                     <div class="flex gap-7 font-inter">
                         <div class="flex items-center gap-2 mt-4">
                             <img src="./images/comment.png" alt="">
@@ -42,15 +43,31 @@ const displayCard = (data) => {
                             <p>${post.posted_time}</p>
                         </div>
                     </div>
-                    <div class="absolute right-4 bottom-1">
-                        <button><img src="images/email.png" alt=""></button>
+                    <div>
+                        <button><img class="btn-email" src="images/email.png" alt=""></button>
                     </div>
                 </div>
             </div>
         </div>
         `;
         cardContainer.appendChild(card);
+        displayTitle(post);
     });
 }
+
+const displayTitle = (post) =>{
+    const allBtn = document.getElementsByClassName('btn-email');
+    for (const btn of allBtn){
+        btn.addEventListener('click', function(){
+            const div = document.createElement('div');
+            div.className = 'bg-white p-4 rounded-3xl flex justify-between mb-3 gap-4 items-center';
+            const titleP = document.createElement('p');
+            titleP.innerText = post.title;
+            div.appendChild(titleP);
+            titleContainer.appendChild(div);
+        })
+    }
+}
+
 
 loadData();
