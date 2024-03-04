@@ -1,25 +1,45 @@
-const cardContainer = document.getElementById('card-container');
-const titleContainer = document.getElementById('title-container');
 const latestPostContainer = document.getElementById('latest-post-container');
 
+const cardContainer = document.getElementById('card-container');
+const titleContainer = document.getElementById('title-container');
+const searchInput = document.querySelector('.input');
+const searchButton = document.querySelector('.search-button');
+const markAsRead = document.querySelector('.mark-as-read-value');
+
+const loader = document.getElementById('loader');
+
+let allPosts = [];
 
 const loadData = () => {
+    loader.style.display = 'block';
     const url = 'https://openapi.programming-hero.com/api/retro-forum/posts';
     fetch(url)
         .then(response => response.json())
-        .then(data => displayCard(data))
+        .then(data => {
+            allPosts = data.posts;
+            displayCard(allPosts);
+        })
+        .finally(() => {
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 2000);
+        });
 }
 
-const displayCard = (data) => {
-    const posts = data.posts;
+const displayCard = (posts) => {
+    cardContainer.innerHTML = '';
+
     posts.forEach(post => {
+        
         const card = document.createElement('div');
         card.className = 'bg-[#F3F3F5] p-10 rounded-3xl flex gap-7';
         card.innerHTML = `
         <div class="bg-[#F3F3F5] p-2 lg:p-10 rounded-3xl flex gap-7">
             <div class="relative">
                 <img class="w-20 h-20 rounded-2xl" src="${post.image}" alt="">
-                <div class="bg-green-500 w-4 h-4 -top-1 -right-1 rounded-full absolute"> </div>
+                <div class="${post.isActive ? 'bg-green-500' : 'bg-red-500'} w-4 h-4 -top-1 -right-1 rounded-full absolute"></div>
+
+
             </div>
             <div class="space-y-3">
                 <div class="flex gap-10 font-inter font-medium">
@@ -45,7 +65,7 @@ const displayCard = (data) => {
                         </div>
                     </div>
                     <div>
-                        <button><img class="btn-email" src="images/email.png" alt=""></button>
+                        <button class="btn-email"><img src="images/email.png" alt=""></button>
                     </div>
                 </div>
             </div>
@@ -55,32 +75,59 @@ const displayCard = (data) => {
         displayTitle(post, card);
     });
 }
-
+let count = 0;
 const displayTitle = (post, card) => {
+
     const btn = card.querySelector('.btn-email');
     btn.addEventListener('click', function () {
+
+        count = count + 1;
+
+
         const div = document.createElement('div');
         div.className = 'bg-white p-4 rounded-3xl flex justify-between gap-4 items-center';
         const titleP = document.createElement('p');
+        const titleV = document.createElement('p');
+
         titleP.innerText = post.title;
-        const seen = document.createElement('p');
-        seen.innerHTML = `<img src="./images/seen.png" alt=""> ${post.view_count}`;
+        titleV.innerText = post.view_count;
         div.appendChild(titleP);
-        div.appendChild(seen);
+        div.appendChild(titleV);
         titleContainer.appendChild(div);
+
+        markAsRead.innerText = count;
+
+
     });
 }
 
+const searchByCategory = (category) => {
+    const filteredPosts = allPosts.filter(post => post.category.toLowerCase() === category.toLowerCase());
+    displayCard(filteredPosts);
+}
 
-const latestPosts = () =>{
+searchButton.addEventListener('click', () => {
+    const searchTerm = searchInput.value.toLowerCase();
+    if (searchTerm) {
+        searchByCategory(searchTerm);
+    } else {
+
+        displayCard(allPosts);
+    }
+});
+
+
+
+
+const latestPosts = () => {
     const url = 'https://openapi.programming-hero.com/api/retro-forum/latest-posts';
     fetch(url)
-    .then(res => res.json())
-    .then(posts => {
-        posts.forEach(post => {
-            const div = document.createElement('div');
-            div.className = 'card card-compact bg-white border p-10';
-            div.innerHTML = `
+        .then(res => res.json())
+        .then(posts => {
+            posts.forEach(post => {
+                const div = document.createElement('div');
+                div.className = 'card card-compact bg-white border p-10';
+                div.innerHTML = `
             <figure><img src="${post.cover_image}" alt="" /></figure>
                     <div class="flex gap-2 items-center">
                         <img class="w-4 h-4" src="./images/icon.JPG" alt="">
@@ -96,15 +143,15 @@ const latestPosts = () =>{
                             </div>
                             <div>
                                 <h3 class="font-bold text-lg">${post.author.name}</h3>
-                                <p class="text-[#12132D99]">${post.author?.designation}</p>
+                                <p class="text-[#12132D99]">${post.author?.designation? post.author.designation:'unknown'}</p>
                             </div>
                           </div>
                       </div>
                     </div>
             `;
-            latestPostContainer.appendChild(div);
-        });
-    })
+                latestPostContainer.appendChild(div);
+            });
+        })
 }
 
 
