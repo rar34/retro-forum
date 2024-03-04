@@ -85,7 +85,7 @@ const displayTitle = (post, card) => {
 
 
         const div = document.createElement('div');
-        div.className = 'bg-white p-4 rounded-3xl flex justify-between gap-4 items-center';
+        div.className = 'bg-white p-4 rounded-3xl flex justify-between gap-4 my-2 items-center';
         const titleP = document.createElement('p');
         titleP.className = 'font-bold';
         const titleV = document.createElement('p');
