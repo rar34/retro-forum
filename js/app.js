@@ -87,10 +87,11 @@ const displayTitle = (post, card) => {
         const div = document.createElement('div');
         div.className = 'bg-white p-4 rounded-3xl flex justify-between gap-4 items-center';
         const titleP = document.createElement('p');
+        titleP.className = 'font-bold';
         const titleV = document.createElement('p');
 
         titleP.innerText = post.title;
-        titleV.innerText = post.view_count;
+        titleV.innerHTML =`<div class="flex items-center"><img src="./images/seen.png" alt=""> ${post.view_count}</div>`;
         div.appendChild(titleP);
         div.appendChild(titleV);
         titleContainer.appendChild(div);
@@ -131,7 +132,8 @@ const latestPosts = () => {
             <figure><img src="${post.cover_image}" alt="" /></figure>
                     <div class="flex gap-2 items-center">
                         <img class="w-4 h-4" src="./images/icon.JPG" alt="">
-                        <p class="text-[#12132D99]">29 January 2024</p>
+                        <p class="text-[#12132D99]">${post.author.posted_date? post.author.posted_date:'no published date'}</p>
+
                     </div>
                     <div class="card-body">
                       <h2 class="card-title text-xl font-extrabold">${post.title}</h2>
